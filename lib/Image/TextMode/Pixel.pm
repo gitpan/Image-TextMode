@@ -1,0 +1,121 @@
+package Image::TextMode::Pixel;
+
+use Moose;
+use Moose::Util::TypeConstraints;
+
+subtype 'Image::TextMode::Pixel::Char' => as 'Str' => where { length( $_ ) == 1 };
+
+# Attribute byte constants
+use constant ATTR_BG_NB => 240;
+use constant ATTR_BLINK => 128;
+use constant ATTR_BG    => 112;
+use constant ATTR_FG    => 15;
+
+has 'char' => ( is => 'rw', isa => 'Image::TextMode::Pixel::Char' );
+
+has 'fg' => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
+);
+
+has 'bg' => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
+);
+
+has 'blink' => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 0,
+);
+
+=head1 NAME
+
+Image::TextMode::Pixel - A base class to represent a text mode "pixel"
+
+=head1 DESCRIPTION
+
+Represents a "pixel; i.e. a character plus, foreground and background colors and
+an blink mode setting.
+
+=head1 ACCESSORS
+
+=over 4
+
+=item * char - The character for the pixel
+
+=item * fg - The foreground palette index
+
+=item * bg - The background palette index
+
+=item * blink - The blink bit
+
+=back
+
+=head1 METHODS
+
+=head2 new( %args )
+
+Creates a new pixel. If you supply an C<attr> argument, then it will be
+broken down into its components (fg, bg, and blink). By default, blink mode
+is off (aka iCEColor is on). Pass a true value for C<blink_mode> to enabled
+it.
+
+=head2 BUILDARGS( %args )
+
+A Moose override to extract the C<attr> key and convert it to components,
+should it exist.
+
+=cut
+
+sub BUILDARGS {
+    my $class   = shift;
+    my $options = {};
+    if ( @_ % 2 != 0 ) {
+        $options = pop;
+    }
+
+    my %args = @_;
+    my $attr = delete $args{ attr };
+
+    if ( $attr ) {
+        $attr = $class->_attr_to_components( $attr, $options );
+        %args = ( %args, %$attr );
+    }
+
+    return \%args;
+}
+
+sub _attr_to_components {
+    my ( $self, $attr, $options ) = @_;
+    $options ||= {};
+    my $blink = $options->{ blink_mode };
+    my %data;
+
+    $data{ fg }    = $attr & ATTR_FG;
+    $data{ bg }    = ( $attr & ( $blink ? ATTR_BG : ATTR_BG_NB ) ) >> 4;
+    $data{ blink } = ( $attr && ATTR_BLINK ) >> 7 if $blink;
+
+    return \%data;
+}
+
+no Moose;
+
+__PACKAGE__->meta->make_immutable;
+
+=head1 AUTHOR
+
+Brian Cassidy E<lt>bricas@cpan.orgE<gt>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2008 by Brian Cassidy
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself. 
+
+=cut
+
+1;
