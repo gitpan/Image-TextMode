@@ -5,11 +5,11 @@ SYNOPSIS
         # load and rasterize an ANSI
         use Image::TextMode::Format::ANSI;
         use Image::TextMode::Renderer::GD;
-    
-        my $ansi = Image::TextMode::Format::ANSI->new;
+        
+    my $ansi = Image::TextMode::Format::ANSI->new;
         $ansi->read( $file );
-    
-        my $renderer = Image::TextMode::Renderer::GD->new;
+        
+    my $renderer = Image::TextMode::Renderer::GD->new;
         print $renderer->fullscale( $ansi );
 
 DESCRIPTION
@@ -17,18 +17,26 @@ DESCRIPTION
     mode image such as an ANSI file.
 
 TODO
-    * better documentation
-    * provide write() subs for ANSI, ANSIMation, IDF, Tundra and XBin
-    * better guessing techniques in the loader
+    *   better documentation
+
+    *   provide write() subs for ANSI, ANSIMation, IDF, Tundra and XBin
+
+    *   better guessing techniques in the loader
 
 SEE ALSO
-    * Image::TextMode::Format::ADF
-    * Image::TextMode::Format::ANSI
-    * Image::TextMode::Format::ANSIMation
-    * Image::TextMode::Format::Bin
-    * Image::TextMode::Format::IDF
-    * Image::TextMode::Format::Tundra
-    * Image::TextMode::Format::XBin
+    *   Image::TextMode::Format::ADF
+
+    *   Image::TextMode::Format::ANSI
+
+    *   Image::TextMode::Format::ANSIMation
+
+    *   Image::TextMode::Format::Bin
+
+    *   Image::TextMode::Format::IDF
+
+    *   Image::TextMode::Format::Tundra
+
+    *   Image::TextMode::Format::XBin
 
 AUTHOR
     Brian Cassidy <bricas@cpan.org>
