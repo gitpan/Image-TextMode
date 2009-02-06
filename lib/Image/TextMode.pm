@@ -3,7 +3,7 @@ package Image::TextMode;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 NAME
 
@@ -32,7 +32,7 @@ image such as an ANSI file.
 
 =item * better documentation
 
-=item * provide write() subs for ANSI, ANSIMation, IDF, Tundra and XBin
+=item * flesh out and optimize write() methods
 
 =item * better guessing techniques in the loader
 
@@ -64,7 +64,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008 by Brian Cassidy
+Copyright 2008-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

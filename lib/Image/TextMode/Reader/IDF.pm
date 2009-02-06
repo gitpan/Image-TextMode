@@ -18,6 +18,7 @@ sub _read {
 
     $image->header( \%header );
 
+    # font and palette data are stored at the bottom of the file
     seek( $fh, -48 - 4096, 2 );
     if ( $image->has_sauce ) {
         seek( $fh, -128, 1 );
@@ -108,7 +109,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008 by Brian Cassidy
+Copyright 2008-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

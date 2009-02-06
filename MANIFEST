@@ -69,10 +69,12 @@ t/ansi/data/test2.ans
 t/ansi/data/test3.ans
 t/ansi/read.t
 t/ansi/use.t
+t/ansi/write.t
 t/ansimation/data/ansimation1.ans
 t/ansimation/data/ansimation2.ans
 t/ansimation/read.t
 t/ansimation/use.t
+t/ansimation/write.t
 t/bin/data/test1.bin
 t/bin/read.t
 t/bin/use.t
@@ -93,11 +95,14 @@ t/core/use.t
 t/idf/data/test1.idf
 t/idf/read.t
 t/idf/use.t
+t/idf/write.t
 t/tundra/data/test1.tnd
 t/tundra/read.t
 t/tundra/use.t
+t/tundra/write.t
 t/xbin/data/test1.xb
 t/xbin/read.t
 t/xbin/use.t
+t/xbin/write.t
 xt/release/pod.t
 xt/release/pod_coverage.t
