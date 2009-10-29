@@ -3,9 +3,10 @@ package Image::TextMode::Renderer::GD;
 use Moose;
 use GD;
 use Image::TextMode::Palette::ANSI;
+use Carp 'croak';
 
 =head1 NAME
-
+tr
 Image::TextMode::Renderer::GD - A GD-based renderer for text mode images
 
 =head1 DESCRIPTION
@@ -42,7 +43,7 @@ sub thumbnail {
     }
 
     my $image_l = do {
-        local $options->{ format } = 'object';
+        local $options->{ format } = 'object'; ## no critic (Variables::ProhibitLocalVar)
         $self->fullscale( $source, $options );
     };
 
@@ -54,7 +55,7 @@ sub thumbnail {
 
     my $output = $options->{ format } || 'png';
 
-    return $image if $options->{ format } eq 'object';
+    return $image if $output eq 'object';
     return $image->$output;
 }
 
@@ -108,7 +109,7 @@ following options to change the output:
 
 =item * blink_mode - disables the 8th bit of an attribute byte to be used with the background color (aka iCEColor) (default: false)
 
-=item * true_color - set this to true to enable true color image output (default: false)
+=item * truecolor - set this to true to enable true color image output (default: false)
 
 =item * 9th_bit - compatibility option to enable a ninth column in the font (default: false)
 
@@ -231,7 +232,7 @@ sub _font_to_gd {
     for my $charval ( 0 .. $font_size ) {
         my $char = $chars->[ $charval ];
         for ( @$char ) {
-            my @binary = split( //, sprintf( '%08b', $_ ) );
+            my @binary = split( //s, sprintf( '%08b', $_ ) );
 
             if ( $ninth ) {
                 push @binary,
@@ -242,7 +243,7 @@ sub _font_to_gd {
             print $temp pack( 'C*', @binary );
         }
     }
-    close $temp;
+    close $temp or croak "Unable to close temp file: $!";
 
     return GD::Font->load( $temp->filename );
 }

@@ -5,11 +5,11 @@ SYNOPSIS
         # load and rasterize an ANSI
         use Image::TextMode::Format::ANSI;
         use Image::TextMode::Renderer::GD;
-        
-    my $ansi = Image::TextMode::Format::ANSI->new;
+    
+        my $ansi = Image::TextMode::Format::ANSI->new;
         $ansi->read( $file );
-        
-    my $renderer = Image::TextMode::Renderer::GD->new;
+    
+        my $renderer = Image::TextMode::Renderer::GD->new;
         print $renderer->fullscale( $ansi );
 
 DESCRIPTION

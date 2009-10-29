@@ -6,6 +6,7 @@ inc/Module/Install/ExtraTests.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
+inc/Module/Install/Scripts.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Image/TextMode.pm
@@ -105,5 +106,7 @@ t/xbin/data/test1.xb
 t/xbin/read.t
 t/xbin/use.t
 t/xbin/write.t
+xt/author/critic.t
+xt/perlcriticrc
 xt/release/pod.t
 xt/release/pod_coverage.t
