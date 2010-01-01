@@ -142,9 +142,10 @@ sub as_ascii {
 
     my $output = '';
     for my $row ( @{ $self->pixeldata } ) {
-        $output .= join( '',
-            map { defined $_->{ char } ? $_->{ char } : ' ' } @$row )
-            . "\n";
+        for my $col ( @$row ) {
+           $output .= defined $col->{ char } ? $col->{ char } : ' '; 
+        }
+        $output .= "\n";
     }
 
     return $output;
@@ -171,6 +172,46 @@ sub max_x {
     return $x;
 }
 
+=head2 ansiscale( $factor )
+
+Perform nearest neighbor scaling in text mode. Returns a new textmode
+image.
+
+    # scale down to 1/4 the original size
+    my $scaled = $image->ansiscale( 0.25 );
+
+=cut
+
+sub ansiscale {
+    my( $self, $factor ) = @_;
+
+    my $new    = (ref $self)->new;
+    my $width  = $self->width * $factor;
+    my $height = $self->height * $factor;
+
+    $width  = int( $width + 1 ) if int( $width ) != $width;
+    $height = int( $height + 1 ) if int( $height ) != $height;
+
+    my $oldpixels = $self->pixeldata;
+    my $newpixels = [];
+
+    my $inv_ratio = ( 1 / $factor );
+
+    for my $y ( 0..$height - 1 ) {
+        for my $x ( 0..$width - 1 ) {
+            my $px = int( $x * $inv_ratio );
+            my $py = int( $y * $inv_ratio );
+
+            $newpixels->[ $y ]->[ $x ] = $oldpixels->[ $py ]->[ $px ];
+        }        
+    } 
+
+    $new->width( $width );
+    $new->height( $height );
+    $new->pixeldata( $newpixels );
+    return $new;
+}
+
 no Moose;
 
 __PACKAGE__->meta->make_immutable;
@@ -181,7 +222,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by Brian Cassidy
+Copyright 2008-2010 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

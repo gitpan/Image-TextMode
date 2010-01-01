@@ -6,7 +6,7 @@ use Image::TextMode::Palette::ANSI;
 use Carp 'croak';
 
 =head1 NAME
-tr
+
 Image::TextMode::Renderer::GD - A GD-based renderer for text mode images
 
 =head1 DESCRIPTION
@@ -265,7 +265,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by Brian Cassidy
+Copyright 2008-2010 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
