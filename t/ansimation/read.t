@@ -3,6 +3,8 @@ use Test::More tests => 23;
 use strict;
 use warnings;
 
+$ENV{ IMAGE_TEXTMODE_NOXS } = 1;
+
 use_ok( 'Image::TextMode::Format::ANSIMation' );
 
 my @files = qw( ansimation1.ans ansimation2.ans );
@@ -12,12 +14,12 @@ for my $file ( @files ) {
     $ansi->read( "t/ansimation/data/${ file }" );
 
     isa_ok( $ansi, 'Image::TextMode::Format::ANSIMation' );
-    my( $w, $h ) = ( $ansi->width, $ansi->height );
-    is( $w,  4, "${ file } width()" );
+    my ( $w, $h ) = ( $ansi->width, $ansi->height );
+    is( $w, 4, "${ file } width()" );
     is( $h, 1, "${ file } height()" );
     is_deeply( [ $ansi->dimensions ], [ $w, $h ], "${ file } dimensions()" );
 
-    isa_ok( $ansi->font, 'Image::TextMode::Font::8x16' );
+    isa_ok( $ansi->font,    'Image::TextMode::Font::8x16' );
     isa_ok( $ansi->palette, 'Image::TextMode::Palette::ANSI' );
 
     my @frames = @{ $ansi->frames };

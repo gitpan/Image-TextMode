@@ -3,6 +3,8 @@ use Test::More tests => 21;
 use strict;
 use warnings;
 
+$ENV{ IMAGE_TEXTMODE_NOXS } = 1;
+
 use_ok( 'Image::TextMode::Format::ANSI' );
 
 my @files = qw( test1.ans test2.ans test3.ans );
@@ -15,7 +17,7 @@ for my $file ( @files ) {
     is( $ansi->width,  4, "${ file } width()" );
     is( $ansi->height, 1, "${ file } height()" );
 
-    isa_ok( $ansi->font, 'Image::TextMode::Font::8x16' );
+    isa_ok( $ansi->font,    'Image::TextMode::Font::8x16' );
     isa_ok( $ansi->palette, 'Image::TextMode::Palette::ANSI' );
 
     if ( $ansi->has_sauce ) {

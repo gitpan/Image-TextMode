@@ -23,8 +23,8 @@ if ( !@files || $options{ help } ) {
     Pod::Usage::pod2usage;
 }
 
-my $read_options   = $options{ readopt };
-my $render_options = $options{ renderopt };
+my $read_options   = _clean_opts( $options{ readopt } );
+my $render_options = _clean_opts( $options{ renderopt } );
 my $method         = $options{ thumbnail } ? 'thumbnail' : 'fullscale';
 my $force_filename = ( @files > 1 || !$options{ output } ) ? 1 : 0;
 my $renderer       = Image::TextMode::Renderer::GD->new;
@@ -100,6 +100,17 @@ for my $file ( @files ) {
     }
 }
 
+sub _clean_opts {
+    my $opts = shift;
+
+    for my $k ( keys %$opts ) {
+        $opts->{ $k } = 1 if lc $opts->{ $k } eq 'true';
+        $opts->{ $k } = 0 if lc $opts->{ $k } eq 'false';
+    }
+
+    return $opts;
+}
+
 __END__
 
 =head1 NAME 
@@ -122,6 +133,18 @@ textmode2png - Convert text mode files to png
     --renderopt key=val     set rendering options
     -h, -?, --help          this message
 
+    Read options:
+    width       force image with to this many columns
+
+    Render options:
+    crop        limit the display to this many rows (default: no limit)
+    blink_mode  disable the 8th bit of an attribute byte to be used with the
+                background color (aka iCEColor) (default: false)
+    truecolor   enable true color image output (default: false)
+    9th_bit     enable a ninth column in the font (default: false)
+    ced         CED mode (black text on gray background) (default: false)
+    format      set the output format (default: png)
+
 =head1 DESCRIPTION
 
 This is a simple command-line tool to help you convert text mode
@@ -134,7 +157,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2009 by Brian Cassidy
+Copyright 2008-2010 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
