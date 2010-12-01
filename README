@@ -30,9 +30,13 @@ SEE ALSO
 
     *   Image::TextMode::Format::ANSIMation
 
+    *   Image::TextMode::Format::AVATAR
+
     *   Image::TextMode::Format::Bin
 
     *   Image::TextMode::Format::IDF
+
+    *   Image::TextMode::Format::PCBoard
 
     *   Image::TextMode::Format::Tundra
 

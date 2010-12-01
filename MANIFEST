@@ -7,6 +7,7 @@ inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
 inc/Module/Install/Scripts.pm
+inc/Module/Install/Share.pm
 inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/Image/TextMode.pm
@@ -20,8 +21,10 @@ lib/Image/TextMode/Format.pm
 lib/Image/TextMode/Format/ADF.pm
 lib/Image/TextMode/Format/ANSI.pm
 lib/Image/TextMode/Format/ANSIMation.pm
+lib/Image/TextMode/Format/AVATAR.pm
 lib/Image/TextMode/Format/Bin.pm
 lib/Image/TextMode/Format/IDF.pm
+lib/Image/TextMode/Format/PCBoard.pm
 lib/Image/TextMode/Format/Tundra.pm
 lib/Image/TextMode/Format/XBin.pm
 lib/Image/TextMode/Loader.pm
@@ -33,8 +36,10 @@ lib/Image/TextMode/Reader.pm
 lib/Image/TextMode/Reader/ADF.pm
 lib/Image/TextMode/Reader/ANSI.pm
 lib/Image/TextMode/Reader/ANSIMation.pm
+lib/Image/TextMode/Reader/AVATAR.pm
 lib/Image/TextMode/Reader/Bin.pm
 lib/Image/TextMode/Reader/IDF.pm
+lib/Image/TextMode/Reader/PCBoard.pm
 lib/Image/TextMode/Reader/Tundra.pm
 lib/Image/TextMode/Reader/XBin.pm
 lib/Image/TextMode/Renderer/GD.pm
@@ -43,8 +48,10 @@ lib/Image/TextMode/Writer.pm
 lib/Image/TextMode/Writer/ADF.pm
 lib/Image/TextMode/Writer/ANSI.pm
 lib/Image/TextMode/Writer/ANSIMation.pm
+lib/Image/TextMode/Writer/AVATAR.pm
 lib/Image/TextMode/Writer/Bin.pm
 lib/Image/TextMode/Writer/IDF.pm
+lib/Image/TextMode/Writer/PCBoard.pm
 lib/Image/TextMode/Writer/Tundra.pm
 lib/Image/TextMode/Writer/XBin.pm
 Makefile.PL
@@ -52,6 +59,12 @@ MANIFEST			This list of files
 META.yml
 README
 script/textmode2png
+share/8x16.fnt
+share/8x16_9b.fnt
+share/8x8.fnt
+share/8x8_9b.fnt
+share/amiga.fnt
+share/amiga_9b.fnt
 t/adf/data/test1.adf
 t/adf/read.t
 t/adf/use.t
@@ -77,6 +90,7 @@ t/ansimation/data/ansimation2.ans
 t/ansimation/read.t
 t/ansimation/use.t
 t/ansimation/write.t
+t/avt/use.t
 t/bin/data/test1.bin
 t/bin/read.t
 t/bin/use.t
@@ -98,6 +112,7 @@ t/idf/data/test1.idf
 t/idf/read.t
 t/idf/use.t
 t/idf/write.t
+t/pcb/use.t
 t/tundra/data/test1.tnd
 t/tundra/read.t
 t/tundra/use.t
