@@ -102,9 +102,9 @@ sub _parse_palette {
     for my $i ( 0 .. @values / 3 - 1 ) {
         my $offset = $i * 3;
         $palette[ $i ] = [
-            $values[ $offset ] * 4,
-            $values[ $offset + 1 ] * 4,
-            $values[ $offset + 2 ] * 4,
+            $values[ $offset ] << 2 | $values[ $offset ] >> 4,
+            $values[ $offset + 1 ] << 2 | $values[ $offset + 1 ] >> 4,
+            $values[ $offset + 2 ] << 2 | $values[ $offset + 2 ] >> 4,
         ];
     }
 
@@ -206,7 +206,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2010 by Brian Cassidy
+Copyright 2008-2011 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

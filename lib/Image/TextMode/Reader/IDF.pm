@@ -68,7 +68,7 @@ sub _parse_palette {
     my @colors;
     for ( 0 .. 15 ) {
         my $offset = $_ * 3;
-        push @colors, [ map { $_ << 2 } @pal[ $offset .. $offset + 2 ] ],;
+        push @colors, [ map { $_ << 2 | $_ >> 4 } @pal[ $offset .. $offset + 2 ] ],;
     }
 
     $image->palette(
@@ -113,7 +113,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2010 by Brian Cassidy
+Copyright 2008-2011 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

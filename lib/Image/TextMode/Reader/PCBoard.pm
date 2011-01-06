@@ -113,8 +113,7 @@ sub _read {
 sub set_attributes {
     my ( $self, $bg, $fg ) = @_;
 
-    my $attr = $self->attr;
-    $self->attr( $attr & ( $bg << 4 ) + $fg );
+    $self->attr( ( $bg << 4 ) + $fg );
 }
 
 sub clear_screen {
@@ -224,7 +223,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2010 by Brian Cassidy
+Copyright 2008-2011 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
