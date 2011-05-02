@@ -74,8 +74,12 @@ t/ansi/conformance.t
 t/ansi/data/ascii-2lines.txt
 t/ansi/data/ascii-81cols.txt
 t/ansi/data/ascii.txt
-t/ansi/data/clearline.ans
-t/ansi/data/clearscreen.ans
+t/ansi/data/clearline-0.ans
+t/ansi/data/clearline-1.ans
+t/ansi/data/clearline-2.ans
+t/ansi/data/clearscreen-0.ans
+t/ansi/data/clearscreen-1.ans
+t/ansi/data/clearscreen-2.ans
 t/ansi/data/move.ans
 t/ansi/data/saverestore.ans
 t/ansi/data/tab.ans

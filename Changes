@@ -1,5 +1,11 @@
 Revision history for Perl extension Image::TextMode.
 
+0.14 2011-05-02
+ - add delete_line() to canvas, which removes the line entirely instead of 
+   just clearing its contents
+ - implement the 0 and 1 options of the "clear screen" command
+ - fix clear_line canvas method where range option included "-1"
+
 0.13 2011-04-27
  - implement ANSI parsing for codes E, F and G
  - reset cursor to (0,0) after a clear screen
