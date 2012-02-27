@@ -121,7 +121,7 @@ sub _parse_compressed {
     my $height = $image->header->{ height };
     my $info;
 
-    while ( read( $fh, $info, 1 ) ) {
+    READ: while ( read( $fh, $info, 1 ) ) {
         $info = unpack( 'C', $info );
         last if $info == 26;
 
@@ -159,7 +159,7 @@ sub _parse_compressed {
             if ( $x == $width ) {
                 $x = 0;
                 $y++;
-                last if $y == $height;
+                last READ if $y == $height;
             }
         }
     }
@@ -206,7 +206,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2011 by Brian Cassidy
+Copyright 2008-2012 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

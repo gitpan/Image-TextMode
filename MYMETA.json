@@ -4,7 +4,7 @@
       "Brian Cassidy <bricas@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Install version 1.04, CPAN::Meta::Converter version 2.120351",
+   "generated_by" : "Module::Install version 1.04, CPAN::Meta::Converter version 2.120530",
    "license" : [
       "perl_5"
    ],
@@ -54,5 +54,5 @@
          "url" : "http://github.com/bricas/image-textmode"
       }
    },
-   "version" : "0.16"
+   "version" : "0.17"
 }
