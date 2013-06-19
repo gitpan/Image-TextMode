@@ -70,10 +70,12 @@ t/adf/read.t
 t/adf/use.t
 t/adf/write.t
 t/ansi/ascii.t
+t/ansi/blink.t
 t/ansi/conformance.t
 t/ansi/data/ascii-2lines.txt
 t/ansi/data/ascii-81cols.txt
 t/ansi/data/ascii.txt
+t/ansi/data/blink.ans
 t/ansi/data/clearline-0.ans
 t/ansi/data/clearline-1.ans
 t/ansi/data/clearline-2.ans
@@ -83,9 +85,11 @@ t/ansi/data/clearscreen-2.ans
 t/ansi/data/move.ans
 t/ansi/data/saverestore.ans
 t/ansi/data/tab.ans
+t/ansi/data/test1-rgb.ans
 t/ansi/data/test1.ans
 t/ansi/data/test2.ans
 t/ansi/data/test3.ans
+t/ansi/read-rgb.t
 t/ansi/read.t
 t/ansi/use.t
 t/ansi/write.t

@@ -32,8 +32,16 @@ sub read {    ## no critic (Subroutines::ProhibitBuiltinHomonyms)
 
     $image->sauce->read( $fh );
 
-    if ( !$options->{ width } && $image->has_sauce ) {
-        $options->{ width } = $image->sauce->tinfo1;
+    seek( $fh, 0, 2 );
+    $options->{ filesize } = tell $fh;
+    seek( $fh, 0, 0 );
+
+    if( $image->has_sauce ) {
+        if ( !$options->{ width } ) {
+            $options->{ width } = $image->sauce->tinfo1;
+        }
+
+        $options->{ filesize } -= $image->sauce->record_size;
     }
 
     seek( $fh, 0, 0 );
