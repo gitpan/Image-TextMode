@@ -26,10 +26,11 @@ requires:
   GD: 2.30
   Getopt::Long: 0
   Module::Pluggable: 0
+  Module::Runtime: 0
   Moose: 0.51
   Pod::Usage: 0
   perl: 5.8.0
 resources:
   license: http://dev.perl.org/licenses/
   repository: http://github.com/bricas/image-textmode
-version: 0.22
+version: 0.23

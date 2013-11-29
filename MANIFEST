@@ -17,10 +17,12 @@ lib/Image/TextMode/Font.pm
 lib/Image/TextMode/Font/8x16.pm
 lib/Image/TextMode/Font/8x8.pm
 lib/Image/TextMode/Font/Amiga.pm
+lib/Image/TextMode/Font/Atari.pm
 lib/Image/TextMode/Format.pm
 lib/Image/TextMode/Format/ADF.pm
 lib/Image/TextMode/Format/ANSI.pm
 lib/Image/TextMode/Format/ANSIMation.pm
+lib/Image/TextMode/Format/ATASCII.pm
 lib/Image/TextMode/Format/AVATAR.pm
 lib/Image/TextMode/Format/Bin.pm
 lib/Image/TextMode/Format/IDF.pm
@@ -30,12 +32,14 @@ lib/Image/TextMode/Format/XBin.pm
 lib/Image/TextMode/Loader.pm
 lib/Image/TextMode/Palette.pm
 lib/Image/TextMode/Palette/ANSI.pm
+lib/Image/TextMode/Palette/Atari.pm
 lib/Image/TextMode/Palette/VGA.pm
 lib/Image/TextMode/Pixel.pm
 lib/Image/TextMode/Reader.pm
 lib/Image/TextMode/Reader/ADF.pm
 lib/Image/TextMode/Reader/ANSI.pm
 lib/Image/TextMode/Reader/ANSIMation.pm
+lib/Image/TextMode/Reader/ATASCII.pm
 lib/Image/TextMode/Reader/AVATAR.pm
 lib/Image/TextMode/Reader/Bin.pm
 lib/Image/TextMode/Reader/IDF.pm
@@ -65,6 +69,8 @@ share/8x8.fnt
 share/8x8_9b.fnt
 share/amiga.fnt
 share/amiga_9b.fnt
+share/atari.fnt
+share/atari_9b.fnt
 t/adf/data/test1.adf
 t/adf/read.t
 t/adf/use.t
@@ -98,6 +104,8 @@ t/ansimation/data/ansimation2.ans
 t/ansimation/read.t
 t/ansimation/use.t
 t/ansimation/write.t
+t/atascii/data/test.ata
+t/atascii/read.t
 t/avt/use.t
 t/bin/data/test1.bin
 t/bin/read.t
