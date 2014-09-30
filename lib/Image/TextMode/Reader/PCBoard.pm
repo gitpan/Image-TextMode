@@ -1,6 +1,7 @@
 package Image::TextMode::Reader::PCBoard;
 
-use Moose;
+use Moo;
+use Types::Standard qw( Int Object HashRef );
 use charnames ':full';
 
 extends 'Image::TextMode::Reader';
@@ -10,23 +11,23 @@ my $S_TXT = 0;
 my $S_OP  = 1;
 my $S_END = 2;
 
-has 'linewrap' => ( is => 'rw', isa => 'Int', default => sub { 80 } );
+has 'linewrap' => ( is => 'rw', isa => Int, default => 80 );
 
-has 'tabstop' => ( is => 'rw', isa => 'Int', default => sub { 8 } );
+has 'tabstop' => ( is => 'rw', isa => Int, default => 8 );
 
-has 'image' => ( is => 'rw', isa => 'Object' );
+has 'image' => ( is => 'rw', isa => Object );
 
-has 'attr' => ( is => 'rw', isa => 'Int', default => sub { 7 } );
+has 'attr' => ( is => 'rw', isa => Int, default => 7 );
 
-has 'x' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'x' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'y' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'y' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'state' => ( is => 'rw', isa => 'Int', default => sub { $S_TXT } );
+has 'state' => ( is => 'rw', isa => Int, default => $S_TXT );
 
 has 'codes' => (
     is      => 'rw',
-    isa     => 'HashRef',
+    isa     => HashRef,
     default => sub { { POFF => '', WAIT => '' } }
 );
 
@@ -162,10 +163,6 @@ sub store {
     }
 }
 
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
-
 =head1 NAME
 
 Image::TextMode::Reader::PCBoard - Reads PCBoard files
@@ -225,7 +222,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

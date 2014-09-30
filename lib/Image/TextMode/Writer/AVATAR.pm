@@ -1,18 +1,14 @@
 package Image::TextMode::Writer::AVATAR;
 
-use Moose;
+use Moo;
 
 extends 'Image::TextMode::Writer';
 
 sub _write {
     my ( $self, $image, $fh, $options ) = @_;
 
-    Moose->throw_error( 'Not yet written' );
+    die( 'Not yet written' );
 }
-
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
@@ -28,7 +24,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

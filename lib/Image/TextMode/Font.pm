@@ -1,16 +1,13 @@
 package Image::TextMode::Font;
 
-use Moose;
+use Moo;
+use Types::Standard qw( Int ArrayRef );
 
-has 'width' => ( is => 'rw', isa => 'Int', default => 0 );
+has 'width' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'height' => ( is => 'rw', isa => 'Int', default => 0 );
+has 'height' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'chars' => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
-
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
+has 'chars' => ( is => 'rw', isa => ArrayRef, default => sub { [] } );
 
 =head1 NAME
 
@@ -45,7 +42,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

@@ -1,11 +1,12 @@
 package Image::TextMode::SAUCE;
 
-use Moose;
+use Moo;
+use Types::Standard qw( Int Str ArrayRef Bool );
 
 # some SAUCE constants
 my $SAUCE_ID      = 'SAUCE';
 my $SAUCE_VERSION = '00';
-my $SAUCE_FILLER  = ' ' x 22;
+my $SAUCE_FILLER  = "\0" x 22;
 my $COMNT_ID      = 'COMNT';
 
 =head1 NAME
@@ -63,53 +64,53 @@ record stored after an EOF char at the end of a given file.
 
 =cut
 
-has 'sauce_id' => ( is => 'rw', isa => 'Str', default => sub { $SAUCE_ID } );
+has 'sauce_id' => ( is => 'rw', isa => Str, default => sub { $SAUCE_ID } );
 
 has 'version' =>
-    ( is => 'rw', isa => 'Str', default => sub { $SAUCE_VERSION } );
+    ( is => 'rw', isa => Str, default => sub { $SAUCE_VERSION } );
 
-has 'title' => ( is => 'rw', isa => 'Str', default => sub { '' } );
+has 'title' => ( is => 'rw', isa => Str, default => sub { '' } );
 
-has 'author' => ( is => 'rw', isa => 'Str', default => sub { '' } );
+has 'author' => ( is => 'rw', isa => Str, default => sub { '' } );
 
-has 'group' => ( is => 'rw', isa => 'Str', default => sub { '' } );
+has 'group' => ( is => 'rw', isa => Str, default => sub { '' } );
 
 has 'date' => (
     is      => 'rw',
-    isa     => 'Str',
+    isa     => Str,
     default => sub {
         my @t = ( localtime )[ 5, 4, 3 ];
         return sprintf '%4d%02d%02d', 1900 + $t[ 0 ], $t[ 1 ] + 1, $t[ 2 ];
     }
 );
 
-has 'filesize' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'filesize' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'filetype_id' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'filetype_id' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'datatype_id' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'datatype_id' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'tinfo1' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'tinfo1' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'tinfo2' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'tinfo2' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'tinfo3' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'tinfo3' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'tinfo4' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'tinfo4' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'comment_count' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'comment_count' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'flags_id' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'flags_id' => ( is => 'rw', isa => Int, default => 0 );
 
 has 'filler' =>
-    ( is => 'rw', isa => 'Str', default => sub { $SAUCE_FILLER } );
+    ( is => 'rw', isa => Str, default => sub { $SAUCE_FILLER } );
 
 has 'comment_id' =>
-    ( is => 'rw', isa => 'Str', default => sub { $COMNT_ID } );
+    ( is => 'rw', isa => Str, default => sub { $COMNT_ID } );
 
-has 'comments' => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+has 'comments' => ( is => 'rw', isa => ArrayRef, default => sub { [] } );
 
-has 'has_sauce' => ( is => 'rw', isa => 'Bool' );
+has 'has_sauce' => ( is => 'rw', isa => Bool );
 
 # define datatypes and filetypes as per SAUCE specs
 my @datatypes
@@ -121,19 +122,21 @@ my $filetypes = {
     },
     Character => {
         filetypes =>
-            [ qw( ASCII ANSi ANSiMation RIP PCBoard Avatar HTML Source ) ],
-        flags => [ 'None', 'iCE Color' ],
+            [ qw( ASCII ANSi ANSiMation RIP PCBoard Avatar HTML Source TundraDraw ) ],
+        flags => [ ( 'ANSiFlags' ) x 3, ( 'None' ) x 6 ],
         tinfo => [
             ( { tinfo1 => 'Width', tinfo2 => 'Height' } ) x 3,
             { tinfo1 => 'Width', tinfo2 => 'Height', tinfo3 => 'Colors' },
-            ( { tinfo1 => 'Width', tinfo2 => 'Height' } ) x 2
+            ( { tinfo1 => 'Width', tinfo2 => 'Height' } ) x 2,
+            ( {} ) x 2,
+            { tinfo1 => 'Width', tinfo2 => 'Height' }
         ]
     },
-    Graphics => {
+    Bitmap => {
         filetypes => [
             qw( GIF PCX LBM/IFF TGA FLI FLC BMP GL DL WPG PNG JPG MPG AVI )
         ],
-        flags => [ 'None' ],
+        flags => [ ( 'None' ) x 14 ],
         tinfo => [
             (   {   tinfo1 => 'Width',
                     tinfo2 => 'Height',
@@ -144,18 +147,18 @@ my $filetypes = {
     },
     Vector => {
         filetypes => [ qw( DXF DWG WPG 3DS ) ],
-        flags     => [ 'None' ],
+        flags     => [ ( 'None' ) x 4 ],
     },
-    Sound => {
+    Audio => {
         filetypes => [
             qw( MOD 669 STM S3M MTM FAR ULT AMF DMF OKT ROL CMF MIDI SADT VOC WAV SMP8 SMP8S SMP16 SMP16S PATCH8 PATCH16 XM HSC IT )
         ],
-        flags => [ 'None' ],
+        flags => [ ( 'None' ) x 20 ],
         tinfo => [ ( {} ) x 16, ( { tinfo1 => 'Sampling Rate' } ) x 4 ]
     },
     BinaryText => {
         filetypes => [ qw( Undefined ) ],
-        flags     => [ 'None', 'iCE Color' ],
+        flags     => [ 'ANSiFlags' ],
     },
     XBin => {
         filetypes => [ qw( Undefined ) ],
@@ -164,7 +167,7 @@ my $filetypes = {
     },
     Archive => {
         filetypes => [ qw( ZIP ARJ LZH ARC TAR ZOO RAR UC2 PAK SQZ ) ],
-        flags     => [ 'None' ],
+        flags     => [ ( 'None' ) x 10 ],
     },
     Executable => {
         filetypes => [ qw( Undefined ) ],
@@ -173,7 +176,7 @@ my $filetypes = {
 };
 
 # vars for use with pack() and unpack()
-my $sauce_template = 'A5 A2 A35 A20 A20 A8 V C C v v v v C C A22';
+my $sauce_template = 'A5 A2 A35 A20 A20 A8 V C C v v v v C C Z22';
 my @sauce_fields
     = qw( sauce_id version title author group date filesize datatype_id filetype_id tinfo1 tinfo2 tinfo3 tinfo4 comment_count flags_id filler );
 my $comnt_template = 'A5 A64';
@@ -203,15 +206,13 @@ sub read {    ## no critic (Subroutines::ProhibitBuiltinHomonyms)
     seek( $fh, -128, 2 );
     my $size = read( $fh, $buffer, 128 );
 
-    if ( substr( $buffer, 0, 5 ) ne $SAUCE_ID ) {
+    # Check for "SAUCE00" header
+    if ( substr( $buffer, 0, 7 ) ne "$SAUCE_ID$SAUCE_VERSION" ) {
         $self->has_sauce( 0 );
         return;
     }
 
     @info{ @sauce_fields } = unpack( $sauce_template, $buffer );
-
-    # because trailing spaces are stripped....
-    $info{ filler } = $SAUCE_FILLER;
 
     # Do we have any comments?
     my $comment_count = $info{ comment_count };
@@ -307,6 +308,11 @@ The string name of the data represented in filetype_id.
 =cut
 
 sub filetype {
+    # Filetype for "BinaryText" (id: 5) is used to encode the image width
+    if( $_[ 0 ]->datatype_id == 5 ) {
+        return 'Undefined';
+    }
+
     return $filetypes->{ $_[ 0 ]->datatype }->{ filetypes }
         ->[ $_[ 0 ]->filetype_id || 0 ];
 }
@@ -319,7 +325,7 @@ The string name of the data represented in flags_id.
 
 sub flags {
     return $filetypes->{ $_[ 0 ]->datatype }->{ flags }
-        ->[ $_[ 0 ]->flags_id ];
+        ->[ $_[ 0 ]->filetype_id ];
 }
 
 =head2 tinfo1_name( )
@@ -366,9 +372,57 @@ sub tinfo4_name {
         ->[ $_[ 0 ]->filetype_id ]->{ tinfo4 };
 }
 
-no Moose;
+=head2 tinfos( )
 
-__PACKAGE__->meta->make_immutable;
+An alias for filler() to match the SAUCE 00.5 specification. The value may be 
+a font name for ASCII, ANSI, ANSiMation, and BinaryText files. 
+
+=cut
+
+sub tinfos {
+    shift->filler( @_ );
+}
+
+=head2 parse_ansiflags( )
+
+For filetypes that support it, extract the metadata embeded in the flags. 
+Currently, those fields are:
+
+=over 4
+
+=item * blink_mode
+
+=item * 9th_bit
+
+=item * dos_aspect
+
+=back
+
+=cut
+
+sub parse_ansiflags {
+    my $self  = shift;
+    my $flags = {};
+
+    my $dt = $self->datatype_id;
+    my $ft = $self->filetype_id;
+    return $flags unless $dt == 5 || ( $dt == 1 && $ft <= 2 );
+
+    my $fid = $self->flags_id;
+    $flags->{ 'blink_mode' } = ($fid & 1) ^ 1;
+    $flags->{ '9th_bit' } = ($fid & 6) == 4;
+    $flags->{ 'dos_aspect' } = ($fid & 24) == 8; 
+
+    return $flags;
+}
+
+=head1 SEE ALSO
+
+=over 4
+
+=item * http://www.acid.org/info/sauce/sauce.htm
+
+=back
 
 =head1 AUTHOR
 
@@ -376,7 +430,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

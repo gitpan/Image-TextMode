@@ -1,6 +1,6 @@
 package Image::TextMode::Renderer::GD;
 
-use Moose;
+use Moo;
 use Module::Runtime ();
 use GD;
 use Image::TextMode::Palette::ANSI;
@@ -330,17 +330,13 @@ sub _fill_gd_palette {
     return \@allocations;
 }
 
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
-
 =head1 AUTHOR
 
 Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

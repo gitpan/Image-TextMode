@@ -1,22 +1,19 @@
 package Image::TextMode::Format::Tundra;
 
-use Moose;
+use Moo;
+use Types::Standard qw( HashRef );
 
 extends 'Image::TextMode::Format', 'Image::TextMode::Canvas';
 
 has 'header' => (
     is      => 'rw',
-    isa     => 'HashRef',
+    isa     => HashRef,
     default => sub { { int_id => 24, id => 'TUNDRA24' } }
 );
 
 has '+render_options' => ( default => sub { { truecolor => 1 } } );
 
 sub extensions { return 'tnd' }
-
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
@@ -50,7 +47,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

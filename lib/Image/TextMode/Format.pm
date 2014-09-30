@@ -1,7 +1,7 @@
 package Image::TextMode::Format;
 
-use Moose;
-
+use Moo;
+use Types::Standard qw( Object HashRef InstanceOf );
 use Module::Runtime ();
 use Image::TextMode::Font::8x16;
 use Image::TextMode::Palette::VGA;
@@ -38,15 +38,13 @@ common attributes (e.g. font and palette).
 =cut
 
 has 'reader' => (
-    is         => 'ro',
-    isa        => 'Image::TextMode::Reader',
-    lazy_build => 1,
+    is         => 'lazy',
+    isa        => InstanceOf['Image::TextMode::Reader'],
 );
 
 has 'writer' => (
-    is         => 'ro',
-    isa        => 'Image::TextMode::Writer',
-    lazy_build => 1,
+    is         => 'lazy',
+    isa        => InstanceOf['Image::TextMode::Writer'],
 );
 
 sub _build_reader {
@@ -75,25 +73,25 @@ sub _xs_or_not {
 
 has 'font' => (
     is      => 'rw',
-    isa     => 'Object',
+    isa     => Object,
     default => sub { Image::TextMode::Font::8x16->new }
 );
 
 has 'palette' => (
     is      => 'rw',
-    isa     => 'Object',
+    isa     => Object,
     default => sub { Image::TextMode::Palette::VGA->new }
 );
 
 has 'sauce' => (
     is      => 'rw',
-    isa     => 'Object',
+    isa     => Object,
     default => sub { Image::TextMode::SAUCE->new },
     handles => [ qw( author title group has_sauce ) ]
 );
 
 has 'render_options' =>
-    ( is => 'rw', isa => 'HashRef', default => sub { {} } );
+    ( is => 'rw', isa => HashRef, default => sub { {} } );
 
 =head1 METHODS
 
@@ -109,6 +107,14 @@ Proxies to the reader's C<read()> method.
 
 sub read {    ## no critic (Subroutines::ProhibitBuiltinHomonyms)
     my ( $self, @rest ) = @_;
+
+    # Work-around RT#99225 until we switch to proper roles
+    if( $self->isa( 'Image::TextMode::Canvas' ) ) {
+        $self->pixeldata;
+        $self->width;
+        $self->height;
+    }
+
     $self->reader->read( $self, @rest );
 }
 
@@ -141,17 +147,13 @@ The following methods are proxies to C<sauce>.
 
 =cut
 
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
-
 =head1 AUTHOR
 
 Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

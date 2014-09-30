@@ -1,23 +1,24 @@
 package Image::TextMode::Reader::AVATAR;
 
-use Moose;
+use Moo;
+use Types::Standard qw( Int Bool Object );
 use charnames ':full';
 
 extends 'Image::TextMode::Reader';
 
-has 'tabstop' => ( is => 'rw', isa => 'Int', default => sub { 8 } );
+has 'tabstop' => ( is => 'rw', isa => Int, default => 8 );
 
-has 'x' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'x' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'y' => ( is => 'rw', isa => 'Int', default => sub { 0 } );
+has 'y' => ( is => 'rw', isa => Int, default => 0 );
 
-has 'insert' => ( is => 'rw', isa => 'Bool', default => sub { 0 } );
+has 'insert' => ( is => 'rw', isa => Bool, default => 0 );
 
-has 'attr' => ( is => 'rw', isa => 'Int', default => sub { 3 } );
+has 'attr' => ( is => 'rw', isa => Int, default => 3 );
 
-has 'image' => ( is => 'rw', isa => 'Object' );
+has 'image' => ( is => 'rw', isa => Object );
 
-has 'linewrap' => ( is => 'rw', isa => 'Int', default => sub { 80 } );
+has 'linewrap' => ( is => 'rw', isa => Int, default => 80 );
 
 sub _read {
     my ( $self, $image, $fh, $options ) = @_;
@@ -293,10 +294,6 @@ sub store {
     }
 }
 
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
-
 =head1 NAME
 
 Image::TextMode::Reader::AVATAR - Reads AVATAR files
@@ -391,7 +388,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

@@ -1,6 +1,7 @@
 package Image::TextMode::Animation;
 
-use Moose;
+use Moo;
+use Types::Standard qw( ArrayRef );
 use Symbol ();
 
 BEGIN {
@@ -32,7 +33,7 @@ for display.
 
 =cut
 
-has 'frames' => ( is => 'rw', isa => 'ArrayRef', default => sub { [] } );
+has 'frames' => ( is => 'rw', lazy => 1, isa => ArrayRef, default => sub { [] } );
 
 =head1 METHODS
 
@@ -115,19 +116,13 @@ The following methods are proxies to the last element in C<frames>.
 
 =back
 
-=cut
-
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
-
 =head1 AUTHOR
 
 Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

@@ -1,6 +1,6 @@
 package Image::TextMode::Format::ATASCII;
 
-use Moose;
+use Moo;
 
 extends 'Image::TextMode::Format', 'Image::TextMode::Canvas';
 
@@ -11,10 +11,6 @@ use Image::TextMode::Palette::Atari;
 has '+palette' => ( default => sub { Image::TextMode::Palette::Atari->new } );
 
 sub extensions { return 'ata' }
-
-no Moose;
-
-__PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
@@ -40,7 +36,7 @@ Brian Cassidy E<lt>bricas@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2008-2013 by Brian Cassidy
+Copyright 2008-2014 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
